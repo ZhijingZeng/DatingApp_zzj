@@ -9,6 +9,11 @@ namespace API.Data
 {
     public class Seed
     {
+        public static async Task ClearConnections(DataContext context)
+        {
+            context.Connections.RemoveRange(context.Connections);
+            await context.SaveChangesAsync();
+        }
         public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             if(await userManager.Users.AnyAsync()) return;
@@ -32,6 +37,8 @@ namespace API.Data
                 user.UserName = user.UserName.ToLower();
                 //user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
                 //user.PasswordSalt = hmac.Key;
+                user.Created = DateTime.SpecifyKind(user.Created,DateTimeKind.Utc);
+                user.LastActive = DateTime.SpecifyKind(user.LastActive,DateTimeKind.Utc);
                 await userManager.CreateAsync(user, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(user,"Member");
             }

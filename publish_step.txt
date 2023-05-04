@@ -1,0 +1,53 @@
+1.client/src search for hard-coded "localhost", and use environment.apiUrl instead
+2.angular.json: outPutPath want it to be served by api
+"outputPath": "../API/wwwroot"
+3.tell api to serve static file as well:
+program.cs:see step 3
+app.UseDefaultFiles();
+app.UseStaticFiles();
+4.command line:
+Create the production build
+into client folder then '$ ng build'
+5.change angular budgets angular.json
+"budgets": 
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
+                },
+6.since code changes, we need to rebuild     
+=>we have our wwwroot folder
+=>we can try dotnet run=>server will host the website
+=>we can go to https://localhost:5001
+7.https://localhost:5001/members when we go to here,since server doesn't 
+know about angular rooting, we need to pass this functionality to angular
+=>create Fallback controller
+
+8.dealing with fake delay in loading.HttpInterceptor
+9.change sqlite to postgresql:
+Create a postgres image in docker:
+ docker run --name postgres -e POSTGRES_PASSWORD=postgrespw -p 5432:5432 -d postgres:latest
+10
+nuget gallary download postgres entity EntityFrameworkCore
+11 stop application and drop database
+12appsetting development.json, change connectionstring
+  ApplicationServiceExtensions, change sqlite into UseNpgsql
+13 create migration suitable to postgres:
+Delete the entire migration folder
+Then :$ dotnet ef migrations add PostgresInitial -o Data/Migrations
+14 fix syntax error  using dotnet run
+(1) program.cs delete connections => 
+Seed.cs a new method
+=>drop the database again, because we now have a half created database since program.cs failed
+(2)seed.json has non-UTC time
+in seed.cs
+drop database again and dotnet run
+
+15 now that everything is good with the database, we can double check it by creating a new 
+connection to the database 
+
+
+16
+using a cloud platform to publish our project
+
+

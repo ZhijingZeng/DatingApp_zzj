@@ -28,11 +28,16 @@ app.UseCors(builder => builder.AllowAnyHeader()
 app.UseAuthentication(); // do you have a valid token
 app.UseAuthorization(); // authorize the endpoint you can go
 
+//step 3
+app.UseDefaultFiles(); //fish out index.htm wwwroot, serve the file
+app.UseStaticFiles(); //serve the content from wwwroot
 
 app.MapControllers();
-
 app.MapHub<PresenceHub>("hubs/presence"); //how do the client find the hub(give a route)
 app.MapHub<MessageHub>("hubs/message"); //how do the client find the hub(give a route)
+app.MapFallbackToController("index","Fallback");
+
+
 using var scope = app.Services.CreateScope();
 var services=scope.ServiceProvider;
 try{
@@ -42,9 +47,11 @@ try{
     await context.Database.MigrateAsync();
     //context.Connections.RemoveRange(context.Connections); //this is for small scale database
     //await context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [Connections]");
-    await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]");
+    //await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]"); //sqlite
+    //await context.Database.ExecuteSqlRawAsync("DELETE FROM \"Connections\""); //postgres
     //truncate is good, but for sqlite specificly,not good
     //be careful using this, directly using sql without using entityframework
+    await Seed.ClearConnections(context);
     await Seed.SeedUsers(userManager,roleManager);
 
 }
