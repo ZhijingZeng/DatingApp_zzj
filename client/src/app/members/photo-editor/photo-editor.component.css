@@ -1,0 +1,35 @@
+.nv-file-over{
+    border: dotted 3px red
+}
+input[type=file]{
+    color: transparent
+}
+.btn-primary{
+    background-color:rgb(83, 167, 240);
+    border:1px solid rgb(19, 79, 209); 
+}
+.btn-outline-primary{
+    color: rgb(19, 79, 209);
+    border:1px solid rgb(19, 79, 209);
+}
+.btn-outline-primary:active, .btn-outline-primary:hover{
+    background-color: rgba(83, 167, 240, 0.37);
+    color:rgb(252, 253, 253);
+    border:1px solid rgb(19, 79, 209);
+} 
+
+.not-approved {
+    opacity: 0.2;
+   }
+.img-wrapper {
+    position: relative
+}
+.img-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 40%;
+}
+
