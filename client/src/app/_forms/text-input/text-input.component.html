@@ -12,9 +12,18 @@
         {{label}} must be at least {{control.errors?.['minlength'].requiredLength}} characters
     </div>
     <div class="invalid-feedback" *ngIf="control.errors?.['maxlength']">
-        {{label}} must be at ost {{control.errors?.['maxlength'].requiredLength}} characters
+        {{label}} must be at most {{control.errors?.['maxlength'].requiredLength}} characters
     </div>
     <div class="invalid-feedback" *ngIf="control.errors?.['notMatching']">
         Confirmation password must match password
+    </div>
+    <div class="invalid-feedback" *ngIf="control.errors?.['lowerCase']">
+        Password must contain lower case characters(a-z)
+    </div>
+    <div class="invalid-feedback" *ngIf="control.errors?.['upperCase']">
+        Password must contain upper case characters(A-Z)
+    </div>
+    <div class="invalid-feedback" *ngIf="control.errors?.['numbers']">
+        Password must contain numbers (0-9)
     </div>
 </div>

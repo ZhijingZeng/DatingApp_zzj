@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import {interval, timer, Observable, Subject, of, from, BehaviorSubject, ReplaySubject} from 'rxjs';
 import { map, tap, takeUntil} from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -47,7 +47,10 @@ export class RegisterComponent implements OnInit {
       dateOfBirth: ['',Validators.required],
       city: ['',Validators.required],
       country: ['',Validators.required],//1. initial value 2.add validators
-      password: ['',[Validators.required,Validators.minLength(4),Validators.maxLength(8)]],
+      password: ['',[Validators.required,Validators.minLength(4),Validators.maxLength(8),
+        this.regexValidator(new RegExp('.*[a-z]+.*'), {'lowerCase': true}),
+        this.regexValidator(new RegExp('.*[A-Z]+.*'), {'upperCase': true}),
+        this.regexValidator(new RegExp('.*[0-9]+.*'), {'numbers': true})]],
       confirmPassword: ['',[Validators.required, this.matchValues('password')]]
     })
     //FormControl are input
@@ -58,10 +61,19 @@ export class RegisterComponent implements OnInit {
     })
 
   }
+  regexValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any}|null => {
+        if (!control.value) {
+            return null;
+        }
+        const valid = regex.test(control.value);
+        return valid ? null : error;
+    }
+}
 
   matchValues(matchTo: string): ValidatorFn{
     return (control: AbstractControl)=>{
-      return control.value ===control.parent?.get(matchTo)?.value? null : {notMatching:true}
+      return control.value === control.parent?.get(matchTo)?.value? null : {notMatching:true}
     }
   }
   register(){
