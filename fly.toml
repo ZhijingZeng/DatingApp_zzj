@@ -1,18 +1,19 @@
-# fly.toml app configuration file generated for datingapp-zhijingzeng on 2023-05-05T00:21:33-05:00
+# fly.toml app configuration file generated for datingapp-zengzhijing on 2023-05-05T00:52:18-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "datingapp-zhijingzeng"
+app = "datingapp-zengzhijing"
 primary_region = "ord"
-[env]
-  ASPNETCORE_URLS="http://+:8080"
-  CloudinarySettings__CloudName="ddgtnwvyx"
-  CloudinarySettings__ApiKey="562992654639259"
 
 [build]
   image = "zhijingzeng/datingapp:latest"
 
+[env]
+  ASPNETCORE_URLS="http://+:8080"
+  CloudinarySettings__CloudName="ddgtnwvyx"
+  CloudinarySettings__ApiKey="562992654639259"
+  
 [http_service]
   internal_port = 8080
   force_https = true

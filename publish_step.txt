@@ -71,4 +71,26 @@ stop the server.
 24 dockerfile expose 8080
 25fly secrets set TokenKey and CloudinarySettings__APiSecret
 26 add connection string provided at runtime by flyio, in program.cs using flyio.txt
+# fly.toml app configuration file generated for datingapp-zhijingzeng on 2023-05-05T00:21:33-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "datingapp-zhijingzeng"
+primary_region = "ord"
+
+
+[build]
+  image = "zhijingzeng/datingapp:latest"
+
+[env]
+  ASPNETCORE_URLS="http://+:8080"
+  CloudinarySettings__CloudName="ddgtnwvyx"
+  CloudinarySettings__ApiKey="562992654639259"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
 
