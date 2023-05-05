@@ -20,7 +20,7 @@ else
 {
 // Use connection string provided at runtime by flyio.
     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-
+    System.Console.WriteLine(connUrl);
     // Parse connection URL to connection string for Npgsql
     connUrl = connUrl.Replace("postgres://", string.Empty);
     var pgUserPass = connUrl.Split("@")[0];
