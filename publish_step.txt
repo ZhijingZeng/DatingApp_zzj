@@ -48,6 +48,26 @@ connection to the database
 
 
 16
-using a cloud platform to publish our project
+using a cloud platform flyio to publish our project
+goal:
+deploy by docker file
+dotnet => docker image => deploy that to flyio 
+                       => connect this docker image to a postgres image that they provide
+ 
+ 17 docker:
+ (1)create a dockerfile under API folder
+(2) create a dockerignore file as we don't not need to copy those files since 
+it will get from dotnet restore or dotnet publish
 
+18. sign in the docker account and we can build docker image by runing "$ docker build -t zhijingzeng/datingapp ."
+19. docker run --rm -it -p 8080:80 zhijingzeng/datingapp:latest
+run it and we found we have a problem connecting to the database. but other than that, we are listening to it at port 80
+20. production mode in appsetting.js, we need to set it right and rebuild the docker image using  18
+21 run again using 19(we would like to replicate when we do the deployment, so we drop the database again)
+22 using http://localhost:8080 to see if it works, if so, then we can push it into docker hub.
+stop the server. 
+23 start a flyio app, and setting the fly.toml [env]
+24 dockerfile expose 8080
+25fly secrets set TokenKey and CloudinarySettings__APiSecret
+26 add connection string provided at runtime by flyio, in program.cs using flyio.txt
 
