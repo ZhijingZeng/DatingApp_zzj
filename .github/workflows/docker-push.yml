@@ -27,7 +27,7 @@ jobs:
           push: true
           tags: zhijingzeng/datingapp:latest
   deploy:
-    need: docker
+    needs: docker
     name: Deploy app
     runs-on: ubuntu-latest
     steps:
